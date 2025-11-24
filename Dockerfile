@@ -2,17 +2,20 @@
 FROM gradle:8-jdk17 AS builder
 WORKDIR /app
 
-# Copy Gradle wrapper & config
+# Copy Gradle wrapper files (needed for Gradle to identify the project)
 COPY gradlew .
 COPY gradlew.bat .
 COPY gradle ./gradle
+
+# Make gradlew executable
+RUN chmod +x ./gradlew
 
 # Copy project files
 COPY build.gradle.kts settings.gradle.kts ./
 COPY src ./src
 
-# Build jar (skip tests)
-RUN ./gradlew clean bootJar --no-daemon -x test
+# Build jar using the installed Gradle (not the wrapper) to avoid wrapper issues
+RUN gradle clean bootJar --no-daemon -x test
 
 # 2️⃣ Run stage
 FROM eclipse-temurin:17-jre
