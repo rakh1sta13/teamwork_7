@@ -5,9 +5,10 @@ spring:
   application:
     name: ramen-ordering-platform
   datasource:
-    url: jdbc:postgresql://localhost:5432/ramen_db
-    username: postgres
-    password: secret
+    url: jdbc:postgresql://dpg-d4i11fkhg0os738n9ll0-a.oregon-postgres.render.com:5432/ramen_db_xw24
+#    postgresql://user:alAFtrp6VQDoCr0E7JPeEHzkHjFCKG43@dpg-d4i11fkhg0os738n9ll0-a.oregon-postgres.render.com/ramen_db_xw24
+    username: user
+    password: alAFtrp6VQDoCr0E7JPeEHzkHjFCKG43
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
