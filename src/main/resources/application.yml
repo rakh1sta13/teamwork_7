@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ramen-ordering-platform
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ramen_db
+    username: postgres
+    password: secret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: never
+
+# Springdoc OpenAPI
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'public-api'
+      paths-to-match: '/api/**'
+      packages-to-scan: com.ramen.ordering
+
+# Logging
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.ramen.ordering: DEBUG
+
+# Custom application properties
+app:
+  jwt:
+    secret: ramenorderingplatformsecretkey
+    expiry: 86400000 # 24 hours
