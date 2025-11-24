@@ -25,7 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 @SecurityRequirement(name = "bearerAuth")
         },
         servers = {
-                @Server(url = "https://dashboard.render.com", description = "Production server"),
+                @Server(url = "https://teamwork-7-1.onrender.com", description = "Production server"),
                 @Server(url = "https://api-dev.ramen.uz", description = "Development server"),
                 @Server(url = "http://localhost:8080", description = "Local dev server")
         }
