@@ -1,11 +1,25 @@
-FROM maven:3.8.5-openjdk-17 AS build
+# 1️⃣ Build stage
+FROM gradle:8-jdk17 AS builder
 WORKDIR /app
-COPY demo/pom.xml ./
-COPY demo/src ./src
-RUN mvn clean package -DskipTests
 
-FROM openjdk:17.0.1-jdk-slim
+# Copy Gradle wrapper & config
+COPY gradlew .
+COPY gradlew.bat .
+COPY gradle ./gradle
+
+# Copy project files
+COPY build.gradle.kts settings.gradle.kts ./
+COPY src ./src
+
+# Build jar (skip tests)
+RUN ./gradlew clean bootJar --no-daemon -x test
+
+# 2️⃣ Run stage
+FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
+
+# Copy jar from builder
+COPY --from=builder /app/build/libs/*.jar app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
